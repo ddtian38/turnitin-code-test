@@ -27,6 +27,7 @@ const App: FC<any> = () => {
     setActiveMembership(undefined);
   }
 
+
   return (
     <div className="App">
       <header className="App-header">
@@ -48,7 +49,7 @@ const App: FC<any> = () => {
               <tbody>
                   { memberships.filter(membership => !search
                     || membership.user?.name.toLowerCase().includes(search.toLowerCase())
-                    || membership.user?.email.includes(search))
+                    || membership.user?.email.toLowerCase().includes(search.toLowerCase())) // fixed case sensitivity when searching by email
                     .map(membership => (
                       <tr key={membership.id}>
                         <td>{membership.user?.name}</td>
@@ -66,7 +67,7 @@ const App: FC<any> = () => {
         { activeMembership &&
           (
             <Modal isOpen={!!activeMembership}>
-              <ModalHeader toggle={e => closeDetailsModal}>User Details</ModalHeader>
+              <ModalHeader toggle={closeDetailsModal}>User Details</ModalHeader> {/* fix close Modal function */}
               <ModalBody>
                 <div>
                   <p>Name: {activeMembership.user?.name}</p>
